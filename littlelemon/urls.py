@@ -19,12 +19,19 @@ from django.urls import path, include
 from rest_framework import routers
 from restaurant import views
 
-# Définir le routeur DRF
 router = routers.DefaultRouter()
-router.register(r'tables', views.BookingViewSet)  # Relie le routeur à BookingViewSet
+router.register(r'tables', views.BookingViewSet)
 
-# Définir les URL du projet
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('restaurant/booking/', include(router.urls)),  # URL de l'API Booking
+
+    # 🔹 URLs DRF (ViewSet)
+    path('restaurant/booking/', include(router.urls)),
+
+    # 🔹 URLs classiques (Menu, auth, message)
+    path('restaurant/', include('restaurant.urls')),
+
+    # DJOSER AUTH
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
 ]
